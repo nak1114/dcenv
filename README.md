@@ -233,7 +233,7 @@ You can affect how rbenv operates with the following settings:
 
 name | default | description
 -----|---------|------------
-`DCENV_HOME` | `dirname $0`/.. | Defines the directory under which Ruby versions and shims reside.
+`DCENV_HOME` | `dirname $0`/.. | Defines the directory under which DCEnv commands and shims reside.
 `DCENV_DIR` | `$PWD` | Directory to start searching for `.dcenv_*` files.
 `DCENV_SHELL` | `bash` or<BR/> `windows` | Defines your command shell.
 `DCENV_COMMAND` | | Internal use only
