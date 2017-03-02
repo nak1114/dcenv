@@ -25,33 +25,33 @@
         cat: {}
 ~~~
 
-1. Id:
+1. **id:**
 This field is initially empty.
 When you push, the registry will give.
 
-2. owner:
+2. **owner:**
 This field is initially empty.
 When you push, the registry will give.
 
-3. image:
+3. **image:**
 Docker containar image name.
 
-4. bash:
+4. **bash:**
 Script for bash.
 
-5. windows:
+5. **windows:**
 Script for windows.
 
-6. tag:
+6. **tag:**
 container tag. you can change this field easy by `dcenv tag` command.default is `latest`.
 
-7. fake:
+7. **fake:**
 Set to true if container image does not exist in DockerHub.
-For example naktak/dcenv-script-sample should be true.
+For example `naktak/dcenv-script-sample` should be true.
 
-8. script:
+8. **script:**
 This script is executed.
 
-9. commands:
+9. **commands:**
   command name with Env.
 
