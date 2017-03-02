@@ -11,13 +11,13 @@ package management independent of OS is possible, unlike apt-get and yum.
 The dcenv command consulted rbenv.
 In the example we install the `go` command.
 
-### Install the configuration.
+#### 1.Install the configuration.
 
     ~~~ 
     $ dcenv install golang
     ~~~
 
-### Deploy the configuration.
+#### 2.Deploy the configuration.
 
     ~~~ 
     $ dcenv local golang
@@ -25,14 +25,18 @@ In the example we install the `go` command.
     ~~~
 
 
-### Execute the command
+#### 3.Execute the command
 
     ~~~ 
     $ go version
     go version go1.8 linux/amd64
     ~~~
 
-### Switching versions
+Only this.
+
+### Switching environment
+
+#### Switching versions
 
     ~~~ 
     $ dcenv tag golang:1.7
@@ -42,7 +46,7 @@ In the example we install the `go` command.
 
 You could change to version 1.7.
 
-### Switching environment
+#### Switching dir
 
 The command can be executed under the directory where `local` is executed.
 
