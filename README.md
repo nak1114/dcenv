@@ -186,7 +186,7 @@ https://nak1114.github.io/dcenv/sign_up.html
 
 ## DCEnv Cheat Sheet
 
-![DCEnv cheat sheet](./docs/DCEnv_CheatSheet "DCEnv cheet sheat")
+![DCEnv cheat sheet](./docs/DCEnv_CheatSheet.png "DCEnv cheet sheat")
 
 ## How to Install dcenv
 
