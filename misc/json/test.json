@@ -1,0 +1,33 @@
+[{
+  "image": "naktak/dcenv_test",
+  "brief": "Brief of 98_test",
+  "config": {
+    "windows": {
+      "Tag": "0.0.1",
+      "Fake": true,
+      "Script": "@echo \"args     :\" %*\n@echo \"comand   :{{.Cmd}}\"\n@echo \"tag      :{{.Tag}}\"\n@echo \"container:{{.Image}}\"\n@echo \"configdir:{{.CfgDir}}\"\n@echo \"env[foo] :{{.Envs.foo}}\"\n@echo \"arg1     :\" %1\n",
+      "Commands": {
+        "dtest": {
+          "foo": "bar"
+        },
+        "dtest2": {
+          "foo": "baz"
+        }
+      }
+    },
+    "bash": {
+      "Tag": "0.0.1",
+      "Fake": true,
+      "Script": "echo \"args     :\" $@\necho \"comand   :\"{{.Cmd}}\necho \"tag      :\"{{.Tag}}\necho \"container:\"{{.Image}}\necho \"configdir:\"{{.CfgDir}}\necho \"env[foo] :\"{{.Envs.foo}}\necho \"arg1     :\" $1\n",
+      "Commands": {
+        "dtest": {
+          "foo": "bar"
+        },
+        "dtest2": {
+          "foo": "baz"
+        }
+      }
+    }
+  }
+}
+]

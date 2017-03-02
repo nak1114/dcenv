@@ -1,0 +1,6 @@
+.dcenv_home/
+misc/go/*
+misc/tmp/*
+*.exe
+
+!.gitkeep

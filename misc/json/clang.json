@@ -1,0 +1,22 @@
+[
+{
+  "image": "naktak/clang",
+  "brief": "Brief of naktak/clang",
+  "config": {
+    "windows": {
+      "Script": "docker run --rm -it -v %CD%:/myapp -w /myapp --entrypoint \"\" naktak/clang:{{.Tag}} {{.Cmd}} %*\n",
+      "Commands": {
+        "clang": {},
+        "clang++": {}
+      }
+    },
+    "bash": {
+      "Script": "docker run --rm -it -v \"$(pwd)\":/myapp -w /myapp --entrypoint \"\" naktak/clang:{{.Tag}} {{.Cmd}} \"$@\"\n",
+      "Commands": {
+        "clang": {},
+        "clang++": {}
+      }
+    }
+  }
+}
+]

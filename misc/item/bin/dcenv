@@ -1,0 +1,16 @@
+#!/bin/bash
+
+if [ -z "$DCENV_COMMAND" ]; then
+   export DCENV_COMMAND=dcenv
+fi
+
+if [ -z "$DCENV_SHELL" ]; then
+   export DCENV_SHELL=bash
+fi
+
+rm -f "${DCENV_HOME}/tmp/${DCENV_COMMAND}"
+"${DCENV_HOME}/files/dcenv" "$@"
+
+if [ -x "${DCENV_HOME}/tmp/${DCENV_COMMAND}" ]; then
+  "${DCENV_HOME}/tmp/${DCENV_COMMAND}" $(cat "${DCENV_HOME}/files/__args__")
+fi

@@ -1,0 +1,37 @@
+commands:
+  go: golang
+  gobuild: golang
+  goconsole: golang
+  gorelease: golang
+  localenv: local/golang
+images:
+  golang:
+    tag: latest
+    fake: false
+    script: |
+      docker run --rm -it -v "{{.CfgDir}}\misc\go":/go -v {{.CfgDir}}:/go/src/github.com/nak1114/dcenv -w /go/src/github.com/nak1114/dcenv -e GOPATH=/go {{.Envs.env}} golang:{{.Tag}} {{.Envs.cmd}}
+    commands:
+      go:
+        cmd: go %*
+        env: -e GOOS=windows -e GOARCH=amd64
+      gobuild:
+        cmd: go build && move /Y ./dcenv.exe %DCENV_HOME%\files\dcenv.exe
+        env: -e GOOS=windows -e GOARCH=amd64
+      goconsole:
+        cmd: /bin/bash
+        env: -e GITHUB_TOKEN=%GITHUB_TOKEN%
+      gorelease:
+        cmd: ./misc/release.sh
+        env: -e GITHUB_TOKEN=%GITHUB_TOKEN%
+  local/golang:
+    tag: latest
+    fake: true
+    script: |
+      @if not DEFINED DCENV_OLDPATH set DCENV_OLDPATH=%PATH%
+      @if not DEFINED DCENV_OLDHOME set DCENV_OLDHOME=%DCENV_HOME%
+      xcopy .\misc\item .\.dcenv_home /Y /I /E
+      copy /Y /B %DCENV_OLDHOME%\files\dcenv.exe .\.dcenv_home\files\
+      @set DCENV_HOME=%CD%\.dcenv_home
+      @set PATH=%DCENV_HOME%\bin;%DCENV_HOME%\shims;%DCENV_OLDPATH%
+    commands:
+      localenv: {}
