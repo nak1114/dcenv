@@ -202,7 +202,8 @@ Specify the environment variable in .bashrc. And reload this file.
 Download the file and extract it.
 
     ~~~ 
-    $ wget http://nak1114.github.io/dcenv/dcenv-0.0.1-linux-amd64.zip
+    $ wget --no-check-certificate https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-linux-amd64.tar.gz
+
     $ mkdir -p $DCENV_HOME
     $ tar xvfz dcenv-0.0.1-linux-amd64.tar.gz -C $DCENV_HOME
     ~~~ 
@@ -220,7 +221,7 @@ Specify the environment variable in system. And restart console.
 Download the file and extract it.
 
     ~~~ 
-    > bitsadmin.exe /TRANSFER zipget http://nak1114.github.io/dcenv/dcenv-0.0.1-windows-amd64.zip %CD%
+    > powershell wget https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-windows-amd64.zip
     > md %DCENV_HOME%
     > powershell Expand-Archive dcenv-0.0.1-windows-amd64.zip  -DestinationPath %DCENV_HOME%
     ~~~ 
