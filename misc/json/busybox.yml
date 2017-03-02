@@ -1,0 +1,19 @@
+- id: ""
+  owner: ""
+  image: busybox
+  brief: Busybox for ls and cat command
+  desc: ""
+  pri: 0
+  config:
+    bash:
+      script: |
+        docker run --rm -it -v "$(pwd)":/myapp -w /myapp busybox:{{.Tag}} {{.Cmd}} "$@"
+      commands: 
+        ls: {}
+        cat: {}
+    windows:
+      script: |
+        docker run --rm -it -v "%CD%":/myapp -w /myapp busybox:{{.Tag}} {{.Cmd}} %*
+      commands:
+        ls: {}
+        cat: {}

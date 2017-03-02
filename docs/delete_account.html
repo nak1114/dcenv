@@ -1,0 +1,79 @@
+<!--
+
+ Copyright 2017 Kii Corporation
+ http://kii.com
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+
+//-->
+
+<html>
+    <head>
+
+        <title>DCEnv registry</title>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+        <script type="text/javascript" src="KiiSDK.min.js"></script>
+        <script type="text/javascript" src="login-page-callback.js"></script>
+        <script type="text/javascript" src="list-page-callback.js"></script>
+        <link rel="stylesheet" href="hellokii.css" />
+
+        <script type="text/javascript">
+            // Initialize the page.
+            window.onload = function() {
+                // Initialize the Kii Cloud SDK.
+                Kii.initializeWithSite("efo16zkedmd7", "56b6b2e56d32447eb636f31c6e33dead", KiiSite.JP);
+            }
+        </script>
+    </head>
+
+    <body>
+        <div class="app-header">
+            DCEnv registry : Delete Account
+        </div>
+
+        <div id="login-page" class="app-body">
+            <div class="input-group">
+                Enter your Username:<br>
+                <input id="username-field" type="text" class="text-edit"/>
+            </div>
+            <div class="input-group">
+                Enter your Password:<br>
+                <input id="password-field" type="password" class="text-edit"/>
+            </div>
+            <div class="input-group">
+                <a id="delete-button" href="javascript:performDeleteAccount()" class="button">Delete Account</a>
+            </div>
+        </div>
+
+        <div id="list-page" class="app-body" style="display: none">
+          <div class="app-message">
+              Sign in has not completed yet.<BR/>
+              Since we have sent the verification URL to your email address, please check the mail and complete the verification.
+          </div>
+        </div>
+        <div id="reset-page" class="app-body" style="display: none">
+          <div class="app-message">
+              Password reset is not completed yet.<BR/>
+              We sent a password reset URL to your email address, so please check your email and complete password reset.
+          </div>
+        </div>
+        <div id="delete-page" class="app-body" style="display: none">
+          <div class="app-message">
+              You have successfully deleted your account
+          </div>
+        </div>
+    </body>
+
+</html>

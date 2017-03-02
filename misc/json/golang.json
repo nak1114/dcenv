@@ -1,0 +1,19 @@
+[{
+  "image": "golang",
+  "brief": "golang for go command",
+  "config": {
+    "windows": {
+      "Script": "docker run --rm -it -v %CD%:/myapp -w /myapp -e GOOS=windows -e GOARCH=386 golang:{{.Tag}} go %*\n",
+      "Commands": {
+        "go": {}
+      }
+    },
+    "bash": {
+      "Script": "docker run --rm -it -v \"$(pwd)\":/myapp -w /myapp golang:{{.Tag}} go \"$@\"\n",
+      "Commands": {
+        "go": {}
+      }
+    }
+  }
+}
+]

@@ -1,0 +1,25 @@
+commands:
+  gobuild: golang
+  goconsole: golang
+  localenv: local/golang
+images:
+  golang:
+    tag: latest
+    fake: false
+    script: |
+      {{.Envs.cmd}}
+    commands:
+      gobuild: {cmd: 'go build && mv -f myapp ${DCENV_HOME}/files/dcenv', env: -e GOOS=linux -e GOARCH=amd64}
+      goconsole: {cmd: /bin/bash, env: "" }
+  local/golang:
+    tag: latest
+    fake: true
+    script: |
+      [ -z "$DCENV_OLDPATH" ] && export DCENV_OLDPATH=${PATH}
+      [ -z "$DCENV_OLDHOME" ] && export DCENV_OLDHOME=${DCENV_HOME}
+      cp -r ./gopath/item ./.dcenv_home
+      cp -r ${DCENV_OLDHOME}/files/dcenv ./.dcenv_home/files/
+      export DCENV_HOME=$PWD/.dcenv_home
+      export PATH=${DCENV_HOME}/bin:${DCENV_HOME}/shims:${DCENV_OLDPATH}
+    commands:
+      localenv: {}
