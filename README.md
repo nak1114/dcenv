@@ -163,7 +163,7 @@ or `dcenv install naktak/dcenv-script-sample`
 #### Sign up for the registry.
 
 Click here to sign up.
-https://nak1114.github.io/dcenv/sign_up.html
+https://nak1114.github.io/dcenv/index.html
 
 
 #### Register your command in the registry.
@@ -181,7 +181,7 @@ https://nak1114.github.io/dcenv/sign_up.html
     
     ~~~ 
 
-#### Delete your\command from the registry
+#### Delete your command from the registry
 
     ~~~ 
     $ dcenv push -d busybox
