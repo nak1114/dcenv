@@ -11,13 +11,13 @@ package management independent of OS is possible, unlike apt-get and yum.
 The dcenv command consulted rbenv.
 In the example we install the `go` command.
 
-### Install the configuration.
+#### 1.Install the configuration.
 
     ~~~ 
     $ dcenv install golang
     ~~~
 
-### Deploy the configuration.
+#### 2.Deploy the configuration.
 
     ~~~ 
     $ dcenv local golang
@@ -25,14 +25,18 @@ In the example we install the `go` command.
     ~~~
 
 
-### Execute the command
+#### 3.Execute the command
 
     ~~~ 
     $ go version
     go version go1.8 linux/amd64
     ~~~
 
-### Switching versions
+Only this.
+
+### Switching environment
+
+#### Switching versions
 
     ~~~ 
     $ dcenv tag golang:1.7
@@ -42,7 +46,7 @@ In the example we install the `go` command.
 
 You could change to version 1.7.
 
-### Switching environment
+#### Switching dir
 
 The command can be executed under the directory where `local` is executed.
 
@@ -159,7 +163,7 @@ or `dcenv install naktak/dcenv-script-sample`
 #### Sign up for the registry.
 
 Click here to sign up.
-https://nak1114.github.io/dcenv/sign_up.html
+https://nak1114.github.io/dcenv/index.html
 
 
 #### Register your command in the registry.
@@ -177,7 +181,7 @@ https://nak1114.github.io/dcenv/sign_up.html
     
     ~~~ 
 
-#### Delete your\command from the registry
+#### Delete your command from the registry
 
     ~~~ 
     $ dcenv push -d busybox
@@ -202,7 +206,8 @@ Specify the environment variable in .bashrc. And reload this file.
 Download the file and extract it.
 
     ~~~ 
-    $ wget http://nak1114.github.io/dcenv/dcenv-0.0.1-linux-amd64.zip
+    $ wget --no-check-certificate https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-linux-amd64.tar.gz
+
     $ mkdir -p $DCENV_HOME
     $ tar xvfz dcenv-0.0.1-linux-amd64.tar.gz -C $DCENV_HOME
     ~~~ 
@@ -220,7 +225,7 @@ Specify the environment variable in system. And restart console.
 Download the file and extract it.
 
     ~~~ 
-    > bitsadmin.exe /TRANSFER zipget http://nak1114.github.io/dcenv/dcenv-0.0.1-windows-amd64.zip %CD%
+    > powershell wget https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-windows-amd64.zip
     > md %DCENV_HOME%
     > powershell Expand-Archive dcenv-0.0.1-windows-amd64.zip  -DestinationPath %DCENV_HOME%
     ~~~ 
@@ -232,7 +237,7 @@ You can affect how rbenv operates with the following settings:
 
 name | default | description
 -----|---------|------------
-`DCENV_HOME` | `dirname $0`/.. | Defines the directory under which Ruby versions and shims reside.
+`DCENV_HOME` | `dirname $0`/.. | Defines the directory under which DCEnv commands and shims reside.
 `DCENV_DIR` | `$PWD` | Directory to start searching for `.dcenv_*` files.
 `DCENV_SHELL` | `bash` or<BR/> `windows` | Defines your command shell.
 `DCENV_COMMAND` | | Internal use only
