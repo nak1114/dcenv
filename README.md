@@ -6,9 +6,24 @@ By using the docker container,
 package management independent of OS is possible, unlike apt-get and yum.
 
 
+* [How It Works](#how-it-works)
+  * [How to install commnad](#how-to-install-commnad)
+  * [Switching environment](#switching-environment)
+  * [More dcenv commands](##more-dcenv-commands)
+* [How to create a command](#how-to-create-a-command)
+* [Command Cheat Sheet](##command-cheat-sheet)
+* [Installation](#installation)
+  * [Linux](#linuxbash)
+  * [Windows](#windows)
+* [Environment variables](#environment-variables)
+* [Contribution](#contribution)
+
+
 ## How It Works
 
 The dcenv command consulted rbenv.
+
+### How to install commnad
 In the example we install the `go` command.
 
 #### 1.Install the configuration.
@@ -31,8 +46,6 @@ In the example we install the `go` command.
     $ go version
     go version go1.8 linux/amd64
     ~~~
-
-Only this.
 
 ### Switching environment
 
@@ -188,11 +201,11 @@ https://nak1114.github.io/dcenv/index.html
     
     ~~~ 
 
-## DCEnv Cheat Sheet
+## Command Cheat Sheet
 
-![DCEnv cheat sheet](./docs/DCEnv_CheatSheet.png "DCEnv cheet sheat")
+![Command cheat sheet](./docs/DCEnv_CheatSheet.png "DCEnv cheet sheat")
 
-## How to Install dcenv
+## Installation
 
 ### Linux(Bash)
 
@@ -200,7 +213,7 @@ Specify the environment variable in .bashrc. And reload this file.
 
     ~~~ .bashrc
     export DCENV_HOME=~/.dcenv
-    export PATH=${DCENV_HOME}/shims;${DCENV_HOME}/bin;${PATH}
+    export PATH=${DCENV_HOME}/shims:${DCENV_HOME}/bin:${PATH}
     ~~~ 
 
 Download the file and extract it.
@@ -209,7 +222,7 @@ Download the file and extract it.
     $ wget --no-check-certificate https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-linux-amd64.tar.gz
 
     $ mkdir -p $DCENV_HOME
-    $ tar xvfz dcenv-0.0.1-linux-amd64.tar.gz -C $DCENV_HOME
+    $ tar xvfz dcenv-v0.0.1-linux-amd64.tar.gz -C $DCENV_HOME
     ~~~ 
 
 
@@ -227,7 +240,7 @@ Download the file and extract it.
     ~~~ 
     > powershell wget https://github.com/nak1114/dcenv/releases/download/v0.0.1/dcenv-v0.0.1-windows-amd64.zip
     > md %DCENV_HOME%
-    > powershell Expand-Archive dcenv-0.0.1-windows-amd64.zip  -DestinationPath %DCENV_HOME%
+    > powershell Expand-Archive dcenv-v0.0.1-windows-amd64.zip  -DestinationPath %DCENV_HOME%
     ~~~ 
 
 
