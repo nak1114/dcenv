@@ -5,6 +5,7 @@ Also, docker makes it easy to change the version of the command.
 By using the docker container,
 package management independent of OS is possible, unlike apt-get and yum.
 
+## Table of contents
 
 * [How It Works](#how-it-works)
   * [How to install commnad](#how-to-install-commnad)
