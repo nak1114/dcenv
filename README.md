@@ -10,7 +10,7 @@ package management independent of OS is possible, unlike apt-get and yum.
 * [How It Works](#how-it-works)
   * [How to install commnad](#how-to-install-commnad)
   * [Switching environment](#switching-environment)
-  * [More dcenv commands](##more-dcenv-commands)
+  * [More dcenv commands](#more-dcenv-commands)
 * [How to create a command](#how-to-create-a-command)
 * [Command Cheat Sheet](#command-cheat-sheet)
 * [Installation](#installation)
