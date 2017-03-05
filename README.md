@@ -12,7 +12,7 @@ package management independent of OS is possible, unlike apt-get and yum.
   * [Switching environment](#switching-environment)
   * [More dcenv commands](##more-dcenv-commands)
 * [How to create a command](#how-to-create-a-command)
-* [Command Cheat Sheet](##command-cheat-sheet)
+* [Command Cheat Sheet](#command-cheat-sheet)
 * [Installation](#installation)
   * [Linux](#linuxbash)
   * [Windows](#windows)
