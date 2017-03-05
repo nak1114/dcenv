@@ -11,7 +11,7 @@ package management independent of OS is possible, unlike apt-get and yum.
   * [How to install commnad](#how-to-install-commnad)
   * [Switching environment](#switching-environment)
   * [More dcenv commands](#more-dcenv-commands)
-* [How to create a command](#how-to-create-a-command)
+* [How to make your command](#how-to-make-your-command)
 * [Command Cheat Sheet](#command-cheat-sheet)
 * [Installation](#installation)
   * [Linux](#linuxbash)
@@ -145,7 +145,7 @@ There are several commands for checking the dcenv environment.
     ~~~ 
 
 
-## How to create a command
+## How to make your command
 
 There are still few commands registered in the registry.
 Please also create your command and register it in the registry.
