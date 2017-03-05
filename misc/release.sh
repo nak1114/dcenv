@@ -10,6 +10,12 @@ CUR=`readlink -f $(dirname $0)`
 pushd ${CUR}
 mkdir tmp
 
+#compile
+#VERSION="1.1.1"
+#VERSION="$(git describe --tags $1)"
+VERSION="$(git describe --abbrev=0)"
+github-release release -u nak1114 -r dcenv -t ${VERSION} --name ${VERSION} 
+
 for OS in "freebsd" "linux" "darwin" "windows"; do
   for ARCH in "386" "amd64"; do
 
@@ -18,10 +24,6 @@ for OS in "freebsd" "linux" "darwin" "windows"; do
     
     cp -r ${CUR}/item ${CUR}/tmp/${APPNAME}
     
-    #compile
-    #VERSION="1.1.1"
-    #VERSION="$(git describe --tags $1)"
-    VERSION="$(git describe --abbrev=0)"
     
     pushd ..
     GOOS=${OS} CGO_ENABLED=0 GOARCH=${ARCH} go build -ldflags "-X main.Version=$VERSION" -o ${EXEC}
@@ -41,7 +43,7 @@ for OS in "freebsd" "linux" "darwin" "windows"; do
 
     #release
     echo ${ARCHIVE}
-    github-release upload -u nak1114 -r dcenv -t ${VERSION} -f ${ARCHIVE}
+    github-release upload -u nak1114 -r dcenv -t ${VERSION} -f ${CUR}/tmp/${ARCHIVE} -n ${ARCHIVE}
   done
 done
 popd
