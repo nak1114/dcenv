@@ -1,81 +1,81 @@
-PACKAGE MAIN
+package main
 
-IMPORT (
-  "FMT"
-  "OS"
-  "PATH/FILEPATH"
+import (
+  "fmt"
+  "os"
+  "path/filepath"
 
-  "GITHUB.COM/KR/PRETTY"
-  "GITHUB.COM/URFAVE/CLI"
+  "github.com/kr/pretty"
+  "github.com/urfave/cli"
 )
 
-VAR COMMAND_LOCAL = CLI.COMMAND{
-  NAME:      "LOCAL",
-  ALIASES:   []STRING{"L"},
-  USAGE:     "DEPLY IMAGE CONFIG DATA TO CURRENT DIR",
-  ARGSUSAGE: "[OPTIONS...] IMAGE[:TAG] [COMMANDS...]",
-  FLAGS: []CLI.FLAG{
-    CLI.BOOLFLAG{
-      NAME:  "FORCE, F",
-      USAGE: "IGNORE CONFIRM",
+var Command_local = cli.Command{
+  Name:      "local",
+  Aliases:   []string{"l"},
+  Usage:     "Deply image config data to current dir",
+  ArgsUsage: "[options...] image[:tag] [commands...]",
+  Flags: []cli.Flag{
+    cli.BoolFlag{
+      Name:  "force, f",
+      Usage: "Ignore confirm",
     },
-    CLI.INTFLAG{
-      NAME:  "NUM, N",
-      VALUE: 0,
-      USAGE: "SPECIFY THE NUMBER OF THE IMAGE CONFIG DATA",
+    cli.IntFlag{
+      Name:  "num, n",
+      Value: 0,
+      Usage: "Specify the number of the image config data",
     },
-    CLI.BOOLFLAG{
-      NAME:  "REMOVE, R",
-      USAGE: "REMOVE THIS IMAGE CONFIG DATA FROM A CURRENT CONFIG FILE",
+    cli.BoolFlag{
+      Name:  "remove, r",
+      Usage: "Remove this image config data from a current config file",
     },
-    CLI.BOOLFLAG{
-      NAME:  "CHECK, C",
-      USAGE: "CHECK AND REWITE A CURRENT CONFIG FILE",
+    cli.BoolFlag{
+      Name:  "check, c",
+      Usage: "Check and rewite a current config file",
     },
-    CLI.STRINGSLICEFLAG{
-      NAME:  "ENVIRONMENT, E",
-      USAGE: "ENVIRONMENT VARIABLE USED IN SCRIPT",
+    cli.StringSliceFlag{
+      Name:  "environment, e",
+      Usage: "Environment variable used in script",
     },
   },
 
-  ACTION: LOCAL,
+  Action: local,
 }
 
-FUNC LOCAL(C *CLI.CONTEXT) {
-  ISFORCE := C.BOOL("FORCE")
+func local(c *cli.Context) {
+  isForce := c.Bool("force")
 
-  IF ISV {
-    FMT.PRINTLN("DCENV LOCAL ", C.ARGS())
+  if isV {
+    fmt.Println("dcenv local ", c.Args())
   }
 
-  P, ERR := OS.GETWD()
-  IF ERR != NIL {
-    FMT.PRINTLN(ERR)
-    RETURN
+  p, err := os.Getwd()
+  if err != nil {
+    fmt.Println(err)
+    return
   }
 
-  FNAME := FILEPATH.JOIN(P, ".DCENV_"+ENVSHELL)
-  CFG := GETCONFIG(FNAME)
-  IF !C.BOOL("CHECK") {
-    IF LEN(C.ARGS()) < 1 {
-      FMT.PRINTLN("NO IMAGE NAME.")
-      CLI.SHOWSUBCOMMANDHELP(C)
-      RETURN
+  fname := filepath.Join(p, ".dcenv_"+envShell)
+  cfg := GetConfig(fname)
+  if !c.Bool("check") {
+    if len(c.Args()) < 1 {
+      fmt.Println("No image name.")
+      cli.ShowSubcommandHelp(c)
+      return
     }
-    TNAME, TCOMMAND, TTAG := PARSEIMAGETAG(C.ARGS()[0])
-    IF !C.BOOL("REMOVE") {
-      TC := SEARCHIMAGEFROMYARD(TNAME, TCOMMAND, TTAG, C.INT("NUM"))
-      IF LEN(C.ARGS()) > 2 {
-        TC.MAKECOMMANDS(C.ARGS()[1:], C.STRINGSLICE("ENVIRONMENT"))
+    tName, tCommand, tTag := ParseImageTag(c.Args()[0])
+    if !c.Bool("remove") {
+      tc := SearchImageFromYard(tName, tCommand, tTag, c.Int("num"))
+      if len(c.Args()) > 2 {
+        tc.MakeCommands(c.Args()[1:], c.StringSlice("environment"))
       }
-      CFG.ADDIMAGE(TC, TNAME, ISFORCE)
-    } ELSE {
-      CFG.DELIMAGE(TNAME, ISFORCE)
+      cfg.AddImage(tc, tName, isForce)
+    } else {
+      cfg.DelImage(tName, isForce)
     }
   }
-  CFG.WRITETOFILE(FNAME)
-  FMT.PRINTLN("COMPLETE!.")
-  IF ISV {
-    PRETTY.PRINTF("--- COFIG %S:\N%# V\N\N", FNAME, CFG)
+  cfg.WriteToFile(fname)
+  fmt.Println("Complete!.")
+  if isV {
+    pretty.Printf("--- cofig %s:\n%# v\n\n", fname, cfg)
   }
 }
