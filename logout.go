@@ -1,23 +1,23 @@
 package main
 
 import (
-  "fmt"
-  "github.com/urfave/cli"
-  //"github.com/Songmu/prompter"
-  baas "github.com/nak1114/dcenv/kii"
+	"fmt"
+
+	baas "github.com/nak1114/dcenv/kii"
+	"github.com/urfave/cli"
 )
 
-var Command_logout = cli.Command{
-  Name:      "logout",
-  Usage:     "Log out from the registry",
-  ArgsUsage: "[options...]",
-  //  Flags:   []cli.Flag{
-  //  },
+var commandLogout = cli.Command{
+	Name:      "logout",
+	Usage:     "Log out from the registry",
+	ArgsUsage: "[options...]",
+	//  Flags:   []cli.Flag{
+	//  },
 
-  Action: logout,
+	Action: logout,
 }
 
 func logout(c *cli.Context) {
-  baas.Logout(fnameAccount())
-  fmt.Println("Logout!")
+	baas.Logout(fnameAccount())
+	fmt.Println("Logout!")
 }

@@ -4,3 +4,4 @@ misc/tmp/*
 *.exe
 
 !.gitkeep
+debug
