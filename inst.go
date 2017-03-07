@@ -14,21 +14,29 @@ import (
 
 var exit = os.Exit
 
+// Cmder are command and command's environments
 type Cmder map[string]map[string]string
 
+// Image is a docker image config.
 type Image struct {
 	Tag      string `json:",omitempty"`
 	Fake     bool   `json:",omitempty"`
 	Script   string
 	Commands Cmder
 }
+
+// ImagePack are some docker image config.
 type ImagePack map[string]Image
 
+//Config is a config file format.
 type Config struct {
 	Commands map[string]string
 	Images   ImagePack
 }
 
+// ParseImageTag is split imagetag name and tag name.
+// s input image name&Tag
+// return fullname,imagename,tag
 func ParseImageTag(s string) (string, string, string) {
 	c := strings.LastIndex(s, "/")
 	t := strings.LastIndex(s, ":")
@@ -38,6 +46,9 @@ func ParseImageTag(s string) (string, string, string) {
 	return s, s[c+1:], ""
 }
 
+// CheckCmdName lints a command name.
+// s command name
+// return command name can use filename?
 func CheckCmdName(s string) bool {
 	if runtime.GOOS == `windows` {
 		return strings.IndexAny(s, `\/:*?"<>|`) < 0
