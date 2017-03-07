@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "misc/test/uexec naktak/makefile:0.0.1 cmd local"

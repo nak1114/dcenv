@@ -1,0 +1,14 @@
+commands:
+  system: naktak/makefile
+  shims: naktak/makefile
+  cmd: naktak/makefile
+images:
+  naktak/makefile:
+    tag: 0.0.1
+    fake: false
+    script: |
+      echo "{{.CfgDir}} {{.Image}}:{{.Tag}} {{.Cmd}} {{.Envs.dir}}"
+    commands:
+      system:  {dir: dummy}
+      shims: {dir: global}
+      cmd: {dir: local}
