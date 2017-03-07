@@ -2,10 +2,8 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path/filepath"
-	"runtime"
 
 	"github.com/urfave/cli"
 )
@@ -92,17 +90,8 @@ func makeShimCommands(cmd string, fname string) (c *Config) {
 		}
 		return
 	}
-	shimDir := filepath.Join(envHome, "shims")
 	for key := range m.Commands {
-		if runtime.GOOS == `windows` {
-			ioutil.WriteFile(filepath.Join(shimDir, key+`.bat`),
-				[]byte("@echo off\nset DCENV_COMMAND="+key+"\ndcenv exec \""+key+"\" %*\n"),
-				0777)
-		} else {
-			ioutil.WriteFile(filepath.Join(shimDir, key),
-				[]byte("#!/bin/bash\nexport DCENV_COMMAND="+key+"\ndcenv exec \""+key+"\" \"$@\"\n"),
-				0777)
-		}
+		MakeShimsFile(key)
 		if isV {
 			fmt.Println("Write command in shims.:", key)
 		}
