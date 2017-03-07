@@ -1,1 +1,3 @@
-#!/bin/bash
+@echo off
+set DCENV_COMMAND={{.Cmd}}
+dcenv exec "{{.Cmd}}" %*

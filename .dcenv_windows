@@ -9,7 +9,7 @@ images:
     tag: latest
     fake: false
     script: |
-      docker run --rm -it -v "{{.CfgDir}}\misc\go":/go -v {{.CfgDir}}:/go/src/github.com/nak1114/dcenv -w /go/src/github.com/nak1114/dcenv -e GOPATH=/go {{.Envs.env}} golang:{{.Tag}} {{.Envs.cmd}}
+      docker run --rm -it -v "%GOPATH%":/go -w /go/src/github.com/nak1114/dcenv -e GOPATH=/go {{.Envs.env}} golang:{{.Tag}} {{.Envs.cmd}}
     commands:
       go:
         cmd: go %*
