@@ -71,10 +71,49 @@ func rehash(c *cli.Context) {
 	SearchConfig("", makeShimCommands)
 }
 
-func makeShimCommands(cmd string, fname string) *Config {
-	makeShimCommand(fname)
-	return nil
+func makeShimCommands(cmd string, fname string) (c *Config) {
+	c = nil
+	if isV {
+		fmt.Println("search:", fname)
+	}
+	if _, err := os.Stat(fname); err != nil {
+		return
+	}
+	if isV {
+		fmt.Println("File found.:", fname)
+	}
+	m := Config{}
+	if err := LoadYaml(&m, fname); err != nil {
+		if isV {
+			fmt.Println("  File can not load.:", fname)
+		}
+		return
+	}
+	if m.Commands == nil {
+		if isV {
+			fmt.Println("  Illigal file format.:", fname)
+		}
+		return
+	}
+	shimDir := filepath.Join(envHome, "shims")
+	for key := range m.Commands {
+		if runtime.GOOS == `windows` {
+			ioutil.WriteFile(filepath.Join(shimDir, key+`.bat`),
+				[]byte("@echo off\nset DCENV_COMMAND="+key+"\ndcenv exec \""+key+"\" %*\n"),
+				0777)
+		} else {
+			ioutil.WriteFile(filepath.Join(shimDir, key),
+				[]byte("#!/bin/bash\nexport DCENV_COMMAND="+key+"\ndcenv exec \""+key+"\" \"$@\"\n"),
+				0777)
+		}
+		if isV {
+			fmt.Println("Write command in shims.:", key)
+		}
+	}
+	return
 }
+
+/*
 func makeShimCommand(fname string) bool {
 	if isV {
 		fmt.Println("search:", fname)
@@ -115,3 +154,4 @@ func makeShimCommand(fname string) bool {
 	}
 	return true
 }
+*/
