@@ -15,6 +15,7 @@ var isD = false
 var envShell = "bash"
 var envHome = ""
 var envCommand = ""
+var envExt = ""
 
 func main() {
 	app := cli.NewApp()
@@ -50,10 +51,11 @@ func main() {
 		commandLogout,
 	}
 
-	envCommand = os.Getenv("DCENV_COMMAND")
+	envExt = ""
 	if runtime.GOOS == `windows` {
-		envCommand = os.Getenv("DCENV_COMMAND") + `.bat`
+		envExt = ".bat"
 	}
+	envCommand = os.Getenv("DCENV_COMMAND") + envExt
 	envShell = os.Getenv("DCENV_SHELL")
 	if envShell == "" {
 		if runtime.GOOS == `windows` {
