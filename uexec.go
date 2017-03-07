@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"runtime"
 	"strings"
 	"text/template"
 
@@ -171,10 +170,32 @@ func MakeArgsFile(sft int) {
 		return
 	}
 }
-func MakeExecFile(m *Config, cmd string, fname string) bool {
+
+func templateFile(fname string, addBuf string, sarg interface{}, oname string) error {
+	buf, e := ioutil.ReadFile(fname)
+	if e != nil {
+		return e
+	}
+	fp, e := os.OpenFile(oname, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)
+	if e != nil {
+		return e
+	}
+	if e := template.Must(template.New("script").Parse(string(buf)+addBuf)).Execute(fp, sarg); e != nil {
+		return e
+	}
+	if e := fp.Close(); e != nil {
+		return e
+	}
+	if isV {
+		fmt.Println("write file:", oname)
+	}
+	return nil
+}
+
+func MakeExecFile(m *Config, cmd string, fname string) {
 	//make script
-	cval := (*m).Commands[cmd]
-	cnt := (*m).Images[cval]
+	cval := m.Commands[cmd]
+	cnt := m.Images[cval]
 
 	sarg := scriptArg{
 		Tag:    cnt.Tag,
@@ -184,41 +205,17 @@ func MakeExecFile(m *Config, cmd string, fname string) bool {
 		Envs:   cnt.Commands[cmd],
 	}
 
-	tf := template.FuncMap{
-	//    "tocmd": func(s string) string { sl:=strings.Split(s,"/");return sl[len(sl)-1] },
-	//    "todir": func(s string) string { sl:=strings.Split(s,"/");return strings.Join(sl[:len(sl)-1],"/") },
-	}
-	hname := `header_` + envShell
-	buf, err := ioutil.ReadFile(filepath.Join(envHome, "files", hname))
+	err := templateFile(
+		filepath.Join(envHome, "files", `header_`+envShell),
+		cnt.Script,
+		sarg,
+		filepath.Join(envHome, "tmp", envCommand))
 	if err != nil {
 		fmt.Println(err)
 		exit(1)
-		return false
+		return
 	}
-	tpl := template.Must(template.New("script").Funcs(tf).Parse(string(buf) + cnt.Script))
-	uname := filepath.Join(envHome, "tmp", envCommand)
-	//fp=os.Stdout
-	fp, err := os.OpenFile(uname, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0777)
-	if err != nil {
-		fmt.Println(err)
-		exit(1)
-		return false
-	}
-	if err := tpl.Execute(fp, sarg); err != nil {
-		fmt.Println(err, hname)
-		exit(1)
-		return false
-	}
-
-	if err := fp.Close(); err != nil {
-		fmt.Println(err)
-		exit(1)
-		return false
-	}
-	if isV {
-		fmt.Println("write file:", uname)
-	}
-	return true
+	return
 }
 
 func MakeExecFileSystem(cmd string) {
@@ -232,14 +229,38 @@ func MakeExecFileSystem(cmd string) {
 	}
 	ret := strings.Join(plist, string(os.PathListSeparator))
 
-	if runtime.GOOS == `windows` {
-		ioutil.WriteFile(filepath.Join(envHome, "tmp", envCommand),
-			[]byte("@setlocal\n@set PATH="+ret+"\n\""+cmd+"\" %*\n"),
-			0777)
-	} else {
-		ioutil.WriteFile(filepath.Join(envHome, "tmp", envCommand),
-			[]byte("#!/bin/bash\nexport PATH="+ret+"\n\""+cmd+"\" \"$@\"\n"),
-			0777)
+	sarg := scriptArg{
+		Cmd:    cmd,
+		CfgDir: ret,
+	}
+
+	err := templateFile(
+		filepath.Join(envHome, "files", `system_`+envShell),
+		"",
+		sarg,
+		filepath.Join(envHome, "tmp", envCommand))
+	if err != nil {
+		fmt.Println(err)
+		exit(1)
+		return
+	}
+	return
+}
+
+func MakeShimsFile(cmd string) {
+	//make script
+	sarg := scriptArg{
+		Cmd: cmd,
+	}
+	err := templateFile(
+		filepath.Join(envHome, "files", `shims_`+envShell),
+		"",
+		sarg,
+		filepath.Join(envHome, "shims", cmd+envExt))
+	if err != nil {
+		fmt.Println(err)
+		exit(1)
+		return
 	}
 	return
 }
