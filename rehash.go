@@ -32,38 +32,35 @@ var commandRehash = cli.Command{
 func rehash(c *cli.Context) {
 	sdir := filepath.Join(envHome, "shims")
 	tdir := filepath.Join(envHome, "tmp")
-	i := 0
-	e := error(nil)
 	if !c.Bool("append") {
-		for i = 0; i < 10; i++ {
-			e = os.RemoveAll(sdir)
-			if e == nil {
+		for i := 0; i < 100; i++ {
+			_, e := os.Stat(sdir)
+			if e != nil {
+				for j := 0; j < 100; j++ {
+					_, e := os.Stat(sdir)
+					if e == nil {
+						break
+					}
+					os.Mkdir(sdir, 0777)
+				}
 				break
 			}
+			os.RemoveAll(sdir)
 		}
-		if e == nil {
-			for i = 0; i < 10; i++ {
-				e = os.Mkdir(sdir, 0777)
+	}
+	for i := 0; i < 100; i++ {
+		_, e := os.Stat(tdir)
+		if e != nil {
+			for j := 0; j < 100; j++ {
+				_, e := os.Stat(tdir)
 				if e == nil {
 					break
 				}
+				os.Mkdir(tdir, 0777)
 			}
-		}
-	}
-	e = nil
-	for i = 0; i < 10; i++ {
-		e = os.RemoveAll(tdir)
-		if e == nil {
 			break
 		}
-	}
-	if e == nil {
-		for i = 0; i < 10; i++ {
-			e = os.Mkdir(tdir, 0777)
-			if e == nil {
-				break
-			}
-		}
+		os.RemoveAll(tdir)
 	}
 	if c.Bool("clean") {
 		return
