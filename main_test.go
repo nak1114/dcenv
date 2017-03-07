@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"os"
 	"testing"
-	//"os/exec"
-	//"runtime"
 )
 
 var message = "initial"
@@ -24,11 +22,6 @@ func eq(t *testing.T, actual interface{}, expected interface{}) {
 }
 
 func TestMain(m *testing.M) {
-  code:=m.Run()
-  ox.Exit(code)
-}
-}
-
-func TestDir(t *testing.T) {
-  Dir(".","/tmp")
+	code := m.Run()
+	os.Exit(code)
 }
