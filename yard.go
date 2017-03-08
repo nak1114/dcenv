@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"net/url"
 	"path/filepath"
-	"strconv"
 	"strings"
 
 	"github.com/Songmu/prompter"
@@ -53,7 +52,7 @@ func yard(c *cli.Context) {
 		CreateNewYard(dname)
 		return
 	}
-	ListYardDetail(dname)
+	NewYardPackFromYard(dname).Disp()
 	return
 
 }
@@ -90,17 +89,20 @@ func (yd *Yard) Disp(i string) {
 	}
 	return
 }
+
+/*
 func ListYardDetail(dname string) {
 	yp := NewYardPackFromYard(dname)
 	for i, yd := range yp {
 		yd.Disp(strconv.Itoa(i))
 	}
 }
+*/
 func CreateNewYard(dname string) {
 	yp := NewYardPackFromYard(dname)
 	if len(yp) > 0 {
 		fmt.Printf("*** A file already exists. ***\n")
-		ListYardDetail(dname)
+		yp.Disp() //ListYardDetail(dname)
 		if ret := prompter.YN("Erase it?", false); !ret {
 			exit(1)
 			return

@@ -8,6 +8,7 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strconv"
 
 	baas "github.com/nak1114/dcenv/kii"
 	"github.com/urfave/cli"
@@ -204,6 +205,12 @@ func (yp YardPack) WriteToYard(dname string) (fname string) {
 		return
 	}
 	return
+}
+
+func (yp YardPack) Disp() {
+	for i, yd := range yp {
+		yd.Disp(strconv.Itoa(i))
+	}
 }
 
 func ListRepoAll() {

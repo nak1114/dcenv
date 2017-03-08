@@ -12,8 +12,6 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var exit = os.Exit
-
 // Cmder are command and command's environments
 type Cmder map[string]map[string]string
 
@@ -56,6 +54,7 @@ func CheckCmdName(s string) bool {
 	return strings.IndexAny(s, `/`) < 0
 }
 
+// MakeCommands makes some original commands & envs.
 func (m *Image) MakeCommands(cmds []string, envs []string) {
 	c := make(Cmder)
 	e := make(map[string]string)
@@ -73,6 +72,8 @@ func (m *Image) MakeCommands(cmds []string, envs []string) {
 	m.Commands = c
 	return
 }
+
+// ValidCommands lints all command name and remove it.
 func (m *Image) ValidCommands() {
 	//normarize command
 	for cmd := range m.Commands {
@@ -84,6 +85,7 @@ func (m *Image) ValidCommands() {
 	return
 }
 
+// SearchImageFromYard find some 'dname' image in your yard.and select a 'cnum' config set.at last, normalize all commands and tag.
 func SearchImageFromYard(dname string, tCommand string, tTag string, cnum int) (tc Image) {
 	yp := NewYardPackFromYard(dname)
 	if len(yp) == 0 {
@@ -129,8 +131,20 @@ func SearchImageFromYard(dname string, tCommand string, tTag string, cnum int) (
 	return
 }
 
-func GetConfig(fname string) (m Config) {
-	//m := Config{}
+// LoadConfig gets a 'Config' from the 'fname' file.
+func LoadConfig(fname string) (m *Config) {
+	m = &Config{}
+	if err := LoadYaml(m, fname); err != nil {
+		if isV {
+			fmt.Println("  File can not unmarshal.:", fname)
+		}
+		return nil
+	}
+	return
+}
+
+// NewConfig finds and creates a 'Config' from the 'fname' file.
+func NewConfig(fname string) (m Config) {
 	//read config file
 	if _, err := os.Stat(fname); err == nil {
 		if isV {
@@ -151,6 +165,7 @@ func GetConfig(fname string) (m Config) {
 	return
 }
 
+// AddImage add a image config data to itself.
 func (m Config) AddImage(c Image, name string, isForce bool) {
 	//check exists image
 	if val, ok := m.Images[name]; ok {
@@ -169,6 +184,7 @@ func (m Config) AddImage(c Image, name string, isForce bool) {
 	return
 }
 
+// DelImage delete a image config data from itself.
 func (m Config) DelImage(name string, isForce bool) {
 	//check exists image
 	if _, ok := m.Images[name]; ok {
@@ -182,6 +198,7 @@ func (m Config) DelImage(name string, isForce bool) {
 	return
 }
 
+// WriteToFile write itself to file with renewal 'commands' field.
 func (m *Config) WriteToFile(fname string) {
 	if len((*m).Images) == 0 {
 		if err := DeleteYaml(fname); err != nil {
@@ -220,24 +237,7 @@ func (m *Config) WriteToFile(fname string) {
 	}
 }
 
-func (ip *ImagePack) WriteToFile(fname string) {
-	//write config file
-	if err := SaveYaml(ip, fname); err != nil {
-		fmt.Println(err)
-		exit(1)
-		return
-	}
-	return
-}
-func NewImagePackFromFile(fname string) (m ImagePack) {
-	if err := LoadYaml(&m, fname); err != nil {
-		fmt.Println(err)
-		exit(1)
-		return
-	}
-	return
-}
-
+// LoadYaml loads a yaml file to object.
 func LoadYaml(v interface{}, fname string) (err error) {
 	buf, err := ioutil.ReadFile(fname)
 	if err == nil {
@@ -245,6 +245,8 @@ func LoadYaml(v interface{}, fname string) (err error) {
 	}
 	return
 }
+
+// SaveYaml saves a yaml file from object.
 func SaveYaml(v interface{}, fname string) (err error) {
 	buf, err := yaml.Marshal(v)
 	if err == nil {
@@ -252,35 +254,9 @@ func SaveYaml(v interface{}, fname string) (err error) {
 	}
 	return
 }
+
+// DeleteYaml delete a file.
 func DeleteYaml(fname string) (err error) {
 	err = os.Remove(fname)
-	return nil
+	return
 }
-
-/*
-// askForConfirmation asks the user for confirmation. A user must type in "yes" or "no" and
-// then press enter. It has fuzzy matching, so "y", "Y", "yes", "YES", and "Yes" all count as
-// confirmations. If the input is not recognized, it will ask again. The function does not return
-// until it gets a valid response from the user.
-func askForConfirmation(s string) bool {
-  reader := bufio.NewReader(os.Stdin)
-
-  for {
-    fmt.Printf("%s [y/n]: ", s)
-
-    response, err := reader.ReadString('\n')
-    if err != nil {
-      fmt.Println(err)
-      os.Exit(1)
-    }
-
-    response = strings.ToLower(strings.TrimSpace(response))
-
-    if response == "y" || response == "yes" {
-      return true
-    } else if response == "n" || response == "no" {
-      return false
-    }
-  }
-}
-*/

@@ -220,10 +220,10 @@ Specify the environment variable in .bashrc. And reload this file.
 Download the file and extract it.
 
     ~~~ 
-    $ wget --no-check-certificate https://github.com/nak1114/dcenv/releases/download/v0.0.3/dcenv-v0.0.3-linux-amd64.tar.gz
+    $ wget --no-check-certificate https://github.com/nak1114/dcenv/releases/download/v0.0.4/dcenv-v0.0.4-linux-amd64.tar.gz
 
     $ mkdir -p $DCENV_HOME
-    $ tar xvfz dcenv-v0.0.3-linux-amd64.tar.gz -C $DCENV_HOME
+    $ tar xvfz dcenv-v0.0.4-linux-amd64.tar.gz -C $DCENV_HOME
     ~~~ 
 
 
@@ -239,9 +239,9 @@ Specify the environment variable in system. And restart console.
 Download the file and extract it.
 
     ~~~ 
-    > powershell wget https://github.com/nak1114/dcenv/releases/download/v0.0.3/dcenv-v0.0.3-windows-amd64.zip
+    > powershell wget https://github.com/nak1114/dcenv/releases/download/v0.0.4/dcenv-v0.0.4-windows-amd64.zip
     > md %DCENV_HOME%
-    > powershell Expand-Archive dcenv-v0.0.3-windows-amd64.zip  -DestinationPath %DCENV_HOME%
+    > powershell Expand-Archive dcenv-v0.0.4-windows-amd64.zip  -DestinationPath %DCENV_HOME%
     ~~~ 
 
 

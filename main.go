@@ -9,7 +9,10 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Version is current version. Overwirte by release.sh
 var Version = "0.0.1"
+
+var exit = os.Exit
 var isV = false
 var isD = false
 var envShell = "bash"
