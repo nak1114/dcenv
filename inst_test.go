@@ -4,6 +4,8 @@ import (
 	"runtime"
 	"testing"
 
+	"fmt"
+
 	a "github.com/nak1114/goutil/assert"
 )
 
@@ -103,5 +105,33 @@ func TestMakeCommands(t *testing.T) {
 	a.Eq(len(m.Commands), 2)
 	m.ValidCommands()
 	a.Eq(len(m.Commands), 1)
+
+}
+
+type TestP int
+
+func (p TestP) MarshalYAML() (interface{}, error) {
+	return nil, fmt.Errorf("test")
+}
+
+func TestYaml(t *testing.T) {
+	a.Set(t, "TestYaml")
+	ret := make(map[string]string)
+	tmp := map[string]string{
+		"hoge": "fuga",
+		"foo":  "bar",
+	}
+	p := TestP(0)
+	e := SaveYaml(tmp, "./misc/tmp/test.yml")
+	a.Eq(e, error(nil))
+	e = LoadYaml(&ret, "./misc/tmp/test.yml")
+	a.Eq(e, error(nil))
+	e = DeleteYaml("./misc/tmp/test.yml")
+	a.Eq(e, error(nil))
+	a.Eq(ret["hoge"], tmp["hoge"])
+	e = LoadYaml(&ret, "./misc/tmp/test.yml")
+	a.Neq(e, error(nil))
+	e = SaveYaml(p, "./misc/tmp/test.yml")
+	a.Neq(e, error(nil))
 
 }

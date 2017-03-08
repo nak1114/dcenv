@@ -66,29 +66,26 @@ func rehash(c *cli.Context) {
 	SearchConfig("", makeShimCommands)
 }
 
-func makeShimCommands(cmd string, fname string) (c *Config) {
-	c = nil
+func makeShimCommands(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("search:", fname)
 	}
 	if _, err := os.Stat(fname); err != nil {
-		return
+		return nil
 	}
 	if isV {
 		fmt.Println("File found.:", fname)
 	}
-	m := Config{}
-	if err := LoadYaml(&m, fname); err != nil {
-		if isV {
-			fmt.Println("  File can not load.:", fname)
-		}
-		return
+	m := LoadConfig(fname)
+	if m == nil {
+		return nil
 	}
+
 	if m.Commands == nil {
 		if isV {
 			fmt.Println("  Illigal file format.:", fname)
 		}
-		return
+		return nil
 	}
 	for key := range m.Commands {
 		MakeShimsFile(key)
@@ -96,7 +93,7 @@ func makeShimCommands(cmd string, fname string) (c *Config) {
 			fmt.Println("Write command in shims.:", key)
 		}
 	}
-	return
+	return nil
 }
 
 /*

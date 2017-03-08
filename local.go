@@ -55,7 +55,7 @@ func local(c *cli.Context) {
 	}
 
 	fname := filepath.Join(p, ".dcenv_"+envShell)
-	cfg := GetConfig(fname)
+	cfg := NewConfig(fname)
 	if !c.Bool("check") {
 		if len(c.Args()) < 1 {
 			fmt.Println("No image name.")

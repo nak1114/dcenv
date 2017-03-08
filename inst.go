@@ -12,8 +12,6 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-var exit = os.Exit
-
 // Cmder are command and command's environments
 type Cmder map[string]map[string]string
 
@@ -133,9 +131,20 @@ func SearchImageFromYard(dname string, tCommand string, tTag string, cnum int) (
 	return
 }
 
-// GetConfig gets a 'Config' from the 'fname' file.
-func GetConfig(fname string) (m Config) {
-	//m := Config{}
+// LoadConfig gets a 'Config' from the 'fname' file.
+func LoadConfig(fname string) (m *Config) {
+	m = &Config{}
+	if err := LoadYaml(m, fname); err != nil {
+		if isV {
+			fmt.Println("  File can not unmarshal.:", fname)
+		}
+		return nil
+	}
+	return
+}
+
+// NewConfig finds and creates a 'Config' from the 'fname' file.
+func NewConfig(fname string) (m Config) {
 	//read config file
 	if _, err := os.Stat(fname); err == nil {
 		if isV {
@@ -228,27 +237,6 @@ func (m *Config) WriteToFile(fname string) {
 	}
 }
 
-// WriteToFile write itself to file.
-func (ip *ImagePack) WriteToFile(fname string) {
-	//write config file
-	if err := SaveYaml(ip, fname); err != nil {
-		fmt.Println(err)
-		exit(1)
-		return
-	}
-	return
-}
-
-// NewImagePackFromFile makes ImagePack Object from file.
-func NewImagePackFromFile(fname string) (m ImagePack) {
-	if err := LoadYaml(&m, fname); err != nil {
-		fmt.Println(err)
-		exit(1)
-		return
-	}
-	return
-}
-
 // LoadYaml loads a yaml file to object.
 func LoadYaml(v interface{}, fname string) (err error) {
 	buf, err := ioutil.ReadFile(fname)
@@ -270,5 +258,5 @@ func SaveYaml(v interface{}, fname string) (err error) {
 // DeleteYaml delete a file.
 func DeleteYaml(fname string) (err error) {
 	err = os.Remove(fname)
-	return nil
+	return
 }

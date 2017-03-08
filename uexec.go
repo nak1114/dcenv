@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-func CheckCommand(cmd string, fname string) *Config {
+func CheckCommand(cmd string, fname string) (m *Config) {
 	if isV {
 		fmt.Println("search:", fname)
 	}
@@ -20,12 +20,9 @@ func CheckCommand(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("  Found the config file.:", fname)
 	}
-	m := Config{}
-	if err := LoadYaml(&m, fname); err != nil {
-		if isV {
-			fmt.Println("  File can not unmarshal.:", fname)
-		}
-		return nil
+	m = LoadConfig(fname)
+	if m == nil {
+		return
 	}
 	cval, ok := m.Commands[cmd]
 	if !ok {
@@ -37,10 +34,10 @@ func CheckCommand(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("found.:", cval)
 	}
-	return &m
+	return
 }
 
-func CheckImage(cmd string, fname string) *Config {
+func CheckImage(cmd string, fname string) (m *Config) {
 	if isV {
 		fmt.Println("search:", fname)
 	}
@@ -50,13 +47,11 @@ func CheckImage(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("  Found the config file.:", fname)
 	}
-	m := Config{}
-	if err := LoadYaml(&m, fname); err != nil {
-		if isV {
-			fmt.Println("  File can not unmarshal.:", fname)
-		}
-		return nil
+	m = LoadConfig(fname)
+	if m == nil {
+		return
 	}
+
 	cval, ok := m.Images[cmd]
 	if !ok {
 		if isV {
@@ -67,7 +62,7 @@ func CheckImage(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("found.:", cval)
 	}
-	return &m
+	return
 }
 
 var CheckCmdsMap = make(map[string][]string)
@@ -76,7 +71,7 @@ func InitCheckCmds() {
 	CheckCmdsMap = make(map[string][]string)
 }
 
-func CheckCmds(cmd string, fname string) *Config {
+func CheckCmds(cmd string, fname string) (m *Config) {
 	if isV {
 		fmt.Println("search:", fname)
 	}
@@ -86,13 +81,11 @@ func CheckCmds(cmd string, fname string) *Config {
 	if isV {
 		fmt.Println("  Found the config file.:", fname)
 	}
-	m := Config{}
-	if err := LoadYaml(&m, fname); err != nil {
-		if isV {
-			fmt.Println("  File can not unmarshal.:", fname)
-		}
+	m = LoadConfig(fname)
+	if m == nil {
 		return nil
 	}
+
 	for key, val := range m.Commands {
 		_, ok := CheckCmdsMap[key]
 		if !ok {

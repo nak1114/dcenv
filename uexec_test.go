@@ -29,7 +29,7 @@ func TestMakeExecFile(t *testing.T) {
 	os.RemoveAll(envHome)
 	cp.Dir("./misc/item", envHome)
 
-	m := GetConfig(fname)
+	m := NewConfig(fname)
 	MakeExecFile(&m, cmd, fname)
 	a.FileContent(ofile, string(buf))
 
