@@ -271,10 +271,6 @@ func ShowExecFile(m *Config, cmd string, fname string) bool {
 		Envs:   cnt.Commands[cmd],
 	}
 
-	tf := template.FuncMap{
-	//    "tocmd": func(s string) string { sl:=strings.Split(s,"/");return sl[len(sl)-1] },
-	//    "todir": func(s string) string { sl:=strings.Split(s,"/");return strings.Join(sl[:len(sl)-1],"/") },
-	}
 	hname := `header_` + envShell
 	buf, err := ioutil.ReadFile(filepath.Join(envHome, "files", hname))
 	if err != nil {
@@ -282,7 +278,7 @@ func ShowExecFile(m *Config, cmd string, fname string) bool {
 		exit(1)
 		return false
 	}
-	tpl := template.Must(template.New("script").Funcs(tf).Parse(string(buf) + cnt.Script))
+	tpl := template.Must(template.New("script").Parse(string(buf) + cnt.Script))
 	if err := tpl.Execute(os.Stdout, sarg); err != nil {
 		fmt.Println(err, hname)
 		exit(1)
