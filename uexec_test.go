@@ -12,6 +12,31 @@ import (
 	"github.com/nak1114/goutil/cp"
 )
 
+func TestShowExecFile(t *testing.T) {
+	envHome = "./misc/tmp/item"
+	envShell = "bash"
+	envCommand = "cmd.bat"
+	cmd := "cmd"
+	fname := "./misc/test/uexec/MakeExecFile_cfg.txt"
+	envShell = "bash"
+	if runtime.GOOS == `windows` {
+		envShell = "windows"
+	}
+	buf, _ := ioutil.ReadFile("./misc/test/uexec/MakeExecFile_" + envShell + ".txt")
+
+	a.Set(t, "ShowExecFile")
+	os.RemoveAll(envHome)
+	cp.Dir("./misc/item", envHome)
+
+	m := NewConfig(fname)
+	bufr, _ := a.StubIO("", func() {
+		ShowExecFile(&m, cmd, fname)
+	})
+	a.Eq(bufr, string(buf))
+
+	os.RemoveAll(envHome)
+}
+
 func TestMakeExecFile(t *testing.T) {
 	envHome = "./misc/tmp/item"
 	envShell = "bash"
@@ -35,6 +60,7 @@ func TestMakeExecFile(t *testing.T) {
 
 	os.RemoveAll(envHome)
 }
+
 func TestMakeShimsFile(t *testing.T) {
 	envHome = "./misc/tmp/item"
 	envShell = "bash"
