@@ -1,0 +1,58 @@
+- id: hogeid0
+  owner: hogeowner0
+  image: naktak/inst-test
+  brief: Brief of naktak/inst-test
+  desc: ""
+  pri: 0
+  config:
+    csh:
+      script: |
+        echo "hogeid0 {{.CfgDir}} {{.Image}}:{{.Tag}} {{.Cmd}}"
+- id: hogeid1
+  owner: hogeowner1
+  image: naktak/inst-test
+  brief: Brief of naktak/inst-test
+  desc: ""
+  pri: 0
+  config:
+    bash:
+      commands:
+        test1: {}
+        te/st2: {}
+- id: hogeid2
+  owner: hogeowner2
+  image: naktak/inst-test
+  brief: Brief of naktak/inst-test
+  desc: ""
+  pri: 0
+  config:
+    bash:
+      script: |
+        echo "hogeid2 {{.CfgDir}} {{.Image}}:{{.Tag}} {{.Cmd}}"
+- id: hogeid3
+  owner: hogeowner3
+  image: naktak/inst-test
+  brief: Brief of naktak/inst-test
+  desc: ""
+  pri: 0
+  config:
+    bash:
+      script: |
+        echo "hogeid3 {{.CfgDir}} {{.Image}}:{{.Tag}} {{.Cmd}}"
+      commands:
+        test1: {}
+        te/st2: {}
+- id: hogeid4
+  owner: hogeowner4
+  image: naktak/inst-test
+  brief: Brief of naktak/inst-test
+  desc: ""
+  pri: 0
+  config:
+    tag: 0.0.1
+    bash:
+      script: |
+        echo "hogeid4 {{.CfgDir}} {{.Image}}:{{.Tag}} {{.Cmd}}"
+      commands:
+        test1: {}
+        te/st2: {}

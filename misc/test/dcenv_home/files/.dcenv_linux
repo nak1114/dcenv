@@ -1,0 +1,20 @@
+commands:
+  clang: naktak/clang
+  clang++: naktak/clang
+  go: golang
+images:
+  golang:
+    tag: latest
+    fake: false
+    script: |
+      docker run --rm -it -v {{.CfgDir}}:/myapp -w /myapp golang:{{.Tag}} go "$@"
+    commands:
+      go: {}
+  naktak/clang:
+    tag: 0.0.1
+    fake: false
+    script: |
+      docker run --rm -it -v {{.CfgDir}}:/myapp -w /myapp --entrypoint "" naktak/clang {{.Cmd}} "$@"
+    commands:
+      clang: {}
+      clang++: {}
