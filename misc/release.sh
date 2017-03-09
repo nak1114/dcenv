@@ -5,6 +5,7 @@ APPNAME=dcenv
 apt-get update
 apt-get install -y zip
 go get github.com/aktau/github-release
+go get github.com/wadey/gocovmerge
 
 CUR=`readlink -f $(dirname $0)`
 pushd ${CUR}
