@@ -144,6 +144,8 @@ func NewYardPackFromFile(fname string) (yp YardPack) {
 	}
 	return
 }
+
+//NewYardPackFromYard makes new object from the yard.If the file is no exist, it returns empty object.
 func NewYardPackFromYard(dname string) (yp YardPack) {
 	fname := filepath.Join(envHome, "image_yard", url.QueryEscape(dname)+".yml")
 	if _, err := os.Stat(fname); err != nil {
