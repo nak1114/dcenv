@@ -89,7 +89,7 @@ func (m *Image) ValidCommands() {
 func SearchImageFromYard(dname string, tCommand string, tTag string, cnum int) (tc Image) {
 	yp := NewYardPackFromYard(dname)
 	if len(yp) == 0 {
-		fmt.Printf("[%s] config data were not found in the yard.\n", len(yp))
+		fmt.Printf("[%s] config data were not found in the yard.\n", dname)
 		fmt.Printf("Please command 'dcenv yard --list %s'\n", dname)
 		exit(1)
 		return
@@ -137,6 +137,7 @@ func LoadConfig(fname string) (m *Config) {
 	if err := LoadYaml(m, fname); err != nil {
 		if isV {
 			fmt.Println("  File can not unmarshal.:", fname)
+			fmt.Println(err)
 		}
 		return nil
 	}
