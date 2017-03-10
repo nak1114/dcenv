@@ -1,0 +1,20 @@
+commands:
+  test1: naktak/config-test
+  test2: naktak/config-test
+  go: golang
+images:
+  golang:
+    tag: "1.7"
+    fake: false
+    script: |
+      docker run --rm -v %CD%:/myapp -w /myapp -e GOOS=windows -e GOARCH=386 golang:{{.Tag}} go %*
+    commands:
+      go: {}
+  naktak/config-test:
+    tag: 0.0.3
+    fake: false
+    script: |
+      echo "config add script"
+    commands:
+      testadd1: {}
+      testadd2: {}

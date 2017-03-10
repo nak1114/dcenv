@@ -1,0 +1,3 @@
+commands:
+  test1: naktak/config-test
+images: {}

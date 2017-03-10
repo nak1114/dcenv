@@ -1,0 +1,15 @@
+- id: hogeid0
+  owner: hogeowner0
+  image: naktak/config-test
+  brief: Brief of naktak/config-test
+  desc: ""
+  pri: 0
+  config:
+    bash:
+      tag: 0.0.3
+      fake: false
+      script: |
+        echo "config add script"
+      commands:
+        testadd1: {}
+        testadd2: {}

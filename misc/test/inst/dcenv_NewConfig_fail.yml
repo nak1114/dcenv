@@ -1,0 +1,39 @@
+commands:
+  clang: naktak/clang
+  clang++: naktak/clang
+  dtest: test/test
+  dtest2: test/test
+  go: golang
+images:
+  fake: false
+  golang:
+    tag: "1.7"
+    fake: false
+    script: |
+      docker run --rm -v %CD%:/myapp -w /myapp -e GOOS=windows -e GOARCH=386 golang:{{.Tag}} go %*
+    commands:
+      go: {}
+  naktak/clang:
+    tag: 0.0.2
+    fake: false
+    script: |
+      docker run --rm -it -v %CD%:/myapp -w /myapp --entrypoint "" naktak/clang {{.Cmd}} %*
+    commands:
+      clang: {}
+      clang++: {}
+  test/test:
+    tag: 0.0.1
+    fake: false
+    script: |
+      @echo "args     :" %*
+      @echo "comand   :{{.Cmd}}"
+      @echo "tag      :{{.Tag}}"
+      @echo "container:{{.Container}}"
+      @echo "configdir:{{.CfgDir}}"
+      @echo "env[foo] :{{.Envs.foo}}"
+      @echo "arg1     :" %1
+    commands:
+      dtest:
+        foo: bar
+      dtest2:
+        foo: baz

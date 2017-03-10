@@ -5,6 +5,7 @@ commands:
   dtest2: test/test
   go: golang
 images:
+  fake: false
   golang:
     tag: "1.7"
     fake: false
