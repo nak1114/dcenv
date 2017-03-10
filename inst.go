@@ -128,6 +128,9 @@ func SearchImageFromYard(dname string, tCommand string, tTag string, cnum int) (
 			return
 		}
 	}
+	fmt.Printf("Not found command for this shell.:%s\n", envShell)
+	fmt.Printf("Please command 'dcenv yard -d %s'\n", dname)
+	exit(1)
 	return
 }
 
