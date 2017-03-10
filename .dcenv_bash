@@ -3,6 +3,7 @@ commands:
   gobuild: golang
   goconsole: golang
   gorelease: golang
+  gotest: golang
   localenv: local/golang
 images:
   golang:
@@ -13,8 +14,11 @@ images:
     commands:
       go: {cmd: go, env: -e GOOS=linux -e GOARCH=amd64}
       gobuild: {cmd: 'go build && mv -f dcenv ${DCENV_HOME}/files/dcenv', env: -e GOOS=linux -e GOARCH=amd64}
-      goconsole: {cmd: /bin/bash, env: -e GITHUB_TOKEN=${GITHUB_TOKEN} }
-      gorelease: {cmd: ./misc/release.sh, env: -e GITHUB_TOKEN=${GITHUB_TOKEN} }
+      goconsole: {cmd: /bin/bash, env: '-e GITHUB_TOKEN=${GITHUB_TOKEN}' }
+      gorelease: {cmd: ./misc/release.sh, env: '-e GITHUB_TOKEN=${GITHUB_TOKEN}' }
+      gotest:
+        cmd: ./misc/test.sh
+        env: '-e GITHUB_TOKEN=${GITHUB_TOKEN}'
   local/golang:
     tag: latest
     fake: true
