@@ -7,8 +7,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/Songmu/prompter"
 	"github.com/kr/pretty"
+
 	"gopkg.in/yaml.v2"
 )
 
@@ -174,7 +174,7 @@ func (m Config) AddImage(c Image, name string, isForce bool) {
 			pretty.Printf("--- cur %s:\n%# v\n\n", name, val)
 			pretty.Printf("--- new %s:\n%# v\n\n", name, c)
 			fmt.Printf("\nFound same image[%s]\n\n", name)
-			if ret := prompter.YN("Overwrite?", true); !ret { //askForConfirmation("Overwrite?"); !ret{
+			if ret := prompterYN("Overwrite?", false); !ret { //askForConfirmation("Overwrite?"); !ret {
 				exit(1)
 				return
 			}

@@ -6,19 +6,23 @@ import (
 	"runtime"
 	"strings"
 
+	"github.com/Songmu/prompter"
 	"github.com/urfave/cli"
 )
 
 // Version is current version. Overwirte by release.sh
 var Version = "0.0.1"
 
-var exit = os.Exit
 var isV = false
 var isD = false
 var envShell = "bash"
 var envHome = ""
 var envCommand = ""
 var envExt = ""
+
+// For testing
+var exit = os.Exit
+var prompterYN = prompter.YN
 
 func main() {
 	app := cli.NewApp()
