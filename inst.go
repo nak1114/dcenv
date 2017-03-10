@@ -194,11 +194,10 @@ func (m Config) DelImage(name string, isForce bool) {
 	if _, ok := m.Images[name]; ok {
 		//insert image
 		delete(m.Images, name)
-	} else {
-		fmt.Println("Image not found.:", name)
-		exit(1)
 		return
 	}
+	fmt.Println("Image not found.:", name)
+	exit(1)
 	return
 }
 
@@ -208,6 +207,7 @@ func (m *Config) WriteToFile(fname string) {
 		if err := DeleteYaml(fname); err != nil {
 			fmt.Println(err)
 			exit(1)
+			return
 		}
 		if isV {
 			fmt.Println("Delete config file. :", fname)
